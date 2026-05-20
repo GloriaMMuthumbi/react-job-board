@@ -1,16 +1,55 @@
-function Filter({label, options}) {
+import { useState } from "react";
+import { FaChevronDown } from "react-icons/fa";
+
+function FilterDropdown({ label, options }) {
     const [isOpen, setIsOpen] = useState(false);
     const [selected, setSelected] = useState(null);
 
     return (
-        <div className="relative<ChevronDown className="{" inline-block text-left">
+        <div className="relative inline-block text-left">
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="flex items-center justify-between w-48 px-4 py-2.5 border-2 border-[#E5E7EB] rounded-xl bg-transparent text-lg font-medium text-[#1E1E1E] hover:bg-gray-50 transition-all"
+                className={`
+                    flex items-center text-[#111827] text-[15px] gap-2 px-5 py-1.5 border-2 rounded-lg bg-transparent text-lg font-medium text-[#1E1E1E] hover:bg-gray-50 transition-all ${ 
+                        isOpen ? "border-[#2563EB]" : "border-[#1E1E1E]"}
+                `}
             >
-                `ml-2 h-5 w-5 transition-transform duration-200 ${isOpen ? 'rotate-180': ''}`}
+                <span>{selected || label}</span>
+
+                <FaChevronDown
+                className={`ml-2 h-3 w-3 transition-transform duration-200 ${
+                    isOpen ? "rotate-180" : ""
+                }`}
                 />
             </button>
+
+            {isOpen && (
+                <>
+                <div
+                    className="fixed inset-0 z-10"
+                    onClick={() => setIsOpen(false)}
+                ></div>
+
+                <div className="absolute right-0 z-20  mt-1 w-full origin-top-right rounded-lg bg-white border-2 border-[#E5E7EB] shadow-lg overflow-hidden">
+                    <div className="py-1">
+                    {options.map((option) => (
+                        <button
+                        key={option}
+                        onClick={() => {
+                            setSelected(option);
+                            setIsOpen(false);
+                        }}
+                        className="block w-full px-4 py-2 text-left text-[15px] text-[#1E1E1E] hover:bg-gray-100 transition-colors"
+                        >
+                        {option}
+                        </button>
+                    ))}
+                    </div>
+                </div>
+                </>
+            )}
         </div>
     );
 }
+
+export default FilterDropdown;
