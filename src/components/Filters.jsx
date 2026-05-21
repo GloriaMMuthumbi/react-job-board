@@ -10,7 +10,7 @@ function FilterDropdown({ label, options }) {
             <button
                 onClick={() => setIsOpen(!isOpen)}
                 className={`
-                    flex items-center text-[#111827] text-[15px] gap-2 px-5 py-1.5 border-2 rounded-lg bg-transparent text-lg font-medium text-[#1E1E1E] hover:bg-gray-50 transition-all ${ 
+                    flex items-center text-[#111827] text-[15px] gap-2 px-3.5 py-1 border-2 rounded-lg bg-transparent text-lg font-medium text-[#1E1E1E] hover:bg-gray-50 transition-all ${ 
                         isOpen ? "border-[#2563EB]" : "border-[#1E1E1E]"}
                 `}
             >
@@ -34,14 +34,14 @@ function FilterDropdown({ label, options }) {
                     <div className="py-1">
                     {options.map((option) => (
                         <button
-                        key={option}
+                        key={option.value}
                         onClick={() => {
-                            setSelected(option);
+                            setSelected(option.label);
                             setIsOpen(false);
                         }}
                         className="block w-full px-4 py-2 text-left text-[15px] text-[#1E1E1E] hover:bg-gray-100 transition-colors"
                         >
-                        {option}
+                        {option.label}
                         </button>
                     ))}
                     </div>
