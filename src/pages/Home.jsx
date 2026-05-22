@@ -42,7 +42,7 @@ function Home() {
     const currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob);
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="bg-gray-50">
             <Navbar />
             <div className="max-w-7xl mx-auto mt-4 px-6 lg:px-8 h-18 min-h-18" >
                 <h1 className="font-semibold text-4xl">Find Your Next Opportunity</h1>
