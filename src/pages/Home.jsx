@@ -42,9 +42,9 @@ function Home() {
     const currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob);
 
     return (
-        <div className="bg-gray-50 min-h-screen">
+        <div className="bg-gray-50 h-full">
             <Navbar />
-            <div className="max-w-7xl mx-auto mt-4 px-6 lg:px-8 h-18 min-h-18" >
+            <div className="max-w-7xl mx-auto mt-4 px-6 lg:px-8 min-h-18" >
                 <h1 className="font-semibold text-4xl">Find Your Next Opportunity</h1>
                 <p className="text-lg text-[#6B7280]">Search thousands of remote jobs from around the world.</p>
                 <div className="mt-5">
@@ -73,6 +73,8 @@ function Home() {
                         salary={job.salary}
                         id={job.id}
                         logo={job.company_logo_url}
+                        url={job.url}
+                        publicationDate={job.publication_date}
                         />
                     ))}
                     </div>

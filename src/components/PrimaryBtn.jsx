@@ -4,6 +4,8 @@ function PrimaryBtn({ label, preIcon, postIcon, link }){
     return(
         <Link
             to={link}
+            target={postIcon ? "_blank" : undefined}
+            rel={postIcon ? "noopener noreferrer" : undefined}
             className="items-center text-sm rounded-lg gap-1 bg-[#2563EB] px-3.5 h-10 inline-flex text-white font-medium"
         >
             {preIcon}

@@ -34,7 +34,7 @@ function JobDetails() {
     return (
         <div className="bg-gray-50">
             <Navbar />
-            <div className="max-w-7xl mx-auto mt-4 px-6 lg:px-8">
+            <div className="max-w-7xl mx-auto mt-4 px-6 lg:px-8 min-h-18">
                 <PrimaryBtn label="Back to Jobs" preIcon={<IoArrowBack />} link={'/'} />
                 <div className="grid grid-cols-3 mt-6 w-full gap-6">
                     <div className="col-span-2">
@@ -55,7 +55,7 @@ function JobDetails() {
                             ))}
                         </div>
                         <div className="mt-5 flex justify-end">
-                            <PrimaryBtn label="Apply Now" postIcon={<FiExternalLink />} />
+                            <PrimaryBtn label="Apply Now" postIcon={<FiExternalLink />} link={job.url}/>
                         </div>
                     </div>
                 </div>
