@@ -29,17 +29,29 @@ function Home() {
     const jobTypeOptions = jobTypes.map((type) =>({
         value: type,
         label: formatLabel(type)
-    }))
+    }));
 
-    //pagination
     const [currentPage, setCurrentPage] = useState(1);
     const jobsPerPage = 6;
-    const pages = Math.ceil(jobs.length / jobsPerPage);
-    const pageNumbers = [...Array(pages).keys()].map((n) => n + 1);
     const indexOfLastJob = currentPage * jobsPerPage;
     const indexOfFirstJob = indexOfLastJob - jobsPerPage;
 
-    const currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob);
+    //search
+    const [searchQuery, setSearchQuery] = useState("");
+
+    const filteredJobs = jobs.filter((job) => 
+        job.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        job.company_name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    const currentJobs = filteredJobs.slice(indexOfFirstJob, indexOfLastJob);
+    const pages = Math.ceil(filteredJobs.length / jobsPerPage);
+    const pageNumbers = [...Array(pages).keys()].map((n) => n + 1);
+
+    const clearSearch = () => {
+        setSearchQuery("");
+    };
+
 
     return (
         <div className="bg-gray-50 h-full">
@@ -48,7 +60,7 @@ function Home() {
                 <h1 className="font-semibold text-4xl">Find Your Next Opportunity</h1>
                 <p className="text-lg text-[#6B7280]">Search thousands of remote jobs from around the world.</p>
                 <div className="mt-5">
-                    <SearchBar />
+                    <SearchBar onSearch={setSearchQuery} onClear={clearSearch} />
                     <div className="inline-flex gap-4">
                     <FilterDropdown
                         label="Job Type"

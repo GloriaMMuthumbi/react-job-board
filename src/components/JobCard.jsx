@@ -39,11 +39,11 @@ function JobCard({ title, company, description, jobType, salary, id, logo, url, 
                 />
                 {salary && <JobTag label={salary} />}
             </div>
-            <div className="flex items-center justify-between">
+            <div className="flex items-end md:items-center justify-between">
                 <p className="text-[#6B7280] text-sm">
                     Posted {getRelativeTime(publicationDate)}
                 </p>
-                <div className="flex gap-4">
+                <div className="flex flex-col md:flex-row gap-4">
                     <PrimaryBtn label="View Details" link={`/job-details/${id}`} />
                     <SecondaryBtn label="Apply Now" icon={<FiExternalLink />} url={url} />
                 </div>
