@@ -31,56 +31,91 @@ function Home() {
         label: formatLabel(type)
     }))
 
+    //pagination
+    const [currentPage, setCurrentPage] = useState(1);
+    const jobsPerPage = 6;
+    const pages = Math.ceil(jobs.length / jobsPerPage);
+    const pageNumbers = [...Array(pages).keys()].map((n) => n + 1);
+    const indexOfLastJob = currentPage * jobsPerPage;
+    const indexOfFirstJob = indexOfLastJob - jobsPerPage;
+
+    const currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob);
+
     return (
         <div className="min-h-screen bg-gray-50">
-        <Navbar />
-        <div className="max-w-7xl mx-auto mt-4 px-6 lg:px-8 h-18 min-h-18" >
-            <h1 className="font-semibold text-4xl">Find Your Next Opportunity</h1>
-            <p className="text-lg text-[#6B7280]">Search thousands of remote jobs from around the world.</p>
-        </div>
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 mt-5">
-            <SearchBar />
-            <div className="inline-flex gap-4">
-            <FilterDropdown
-                label="Job Type"
-                options={jobTypeOptions}
-            />
-            {/* <FilterDropdown
-                label="Location"
-                options={["Remote", "Onsite", "Hybrid"]}
-            /> */}
+            <Navbar />
+            <div className="max-w-7xl mx-auto mt-4 px-6 lg:px-8 h-18 min-h-18" >
+                <h1 className="font-semibold text-4xl">Find Your Next Opportunity</h1>
+                <p className="text-lg text-[#6B7280]">Search thousands of remote jobs from around the world.</p>
+                <div className="mt-5">
+                    <SearchBar />
+                    <div className="inline-flex gap-4">
+                    <FilterDropdown
+                        label="Job Type"
+                        options={jobTypeOptions}
+                    />
+                        {/* <FilterDropdown
+                            label="Location"
+                            options={["Remote", "Onsite", "Hybrid"]}
+                        /> */}
+                    </div>
+                </div>
+                <div className="mt-8">
+                    <div className="grid grid-cols-2 gap-4">
+                    {currentJobs.map((job) => (
+                        <JobCard
+                        key={job.id}
+                        title={job.title}
+                        company={job.company_name}
+                        location={job.candidate_required_location}
+                        description={job.description}
+                        jobType={job.job_type}
+                        salary={job.salary}
+                        id={job.id}
+                        logo={job.company_logo_url}
+                        />
+                    ))}
+                    </div>
+                    <div className="flex pt-10 items-center justify-center">
+                        <nav aria-label="Page navigation">
+                            <ul className="flex -space-x-px">
+                                <li>
+                                    <button
+                                        onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                                        disabled={currentPage === 1}
+                                        className="flex bg-white items-center justify-center box-border border border-[#E5E7EB] hover:bg-[#EFF6FF] px-3 py-1 rounded-tl-lg rounded-bl-lg disabled:opacity-50 disabled:hover:bg-white disabled:cursor-not-allowed">
+                                            Previous
+                                    </button>
+                                </li>
+                                {pageNumbers.map((page) => (
+                                    <li key={page}>
+                                        <button
+                                            onClick={() => setCurrentPage(page)}
+                                            className={`flex items-center justify-center border border-[#E5E7EB] px-3 py-1
+                                            ${
+                                                currentPage === page
+                                                ? "bg-[#2563EB] text-white"
+                                                : "bg-white hover:bg-[#EFF6FF]"
+                                            }`}
+                                        >
+                                            {page}
+                                        </button>
+                                    </li>
+                                ))}
+                                <li>
+                                    <button 
+                                        onClick={() => setCurrentPage((next) => Math.min(next + 1, pages))}
+                                        disabled={currentPage === pages || pages <= 1}
+                                        className="flex bg-white items-center justify-center box-border border border-[#E5E7EB] hover:bg-[#EFF6FF] px-3 py-1 rounded-tr-lg rounded-br-lg disabled:opacity-50 disabled:hover:bg-white disabled:cursor-not-allowed">
+                                            Next
+                                    </button>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
             </div>
         </div>
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 mt-8">
-            <div className="grid grid-cols-2 gap-4">
-            {jobs.slice(0, 6).map((job) => (
-                <JobCard
-                key={job.id}
-                title={job.title}
-                company={job.company_name}
-                location={job.candidate_required_location}
-                description={job.description}
-                jobType={job.job_type}
-                salary={job.salary}
-                id={job.id}
-                logo={job.company_logo_url}
-                />
-            ))}
-            </div>
-            <div className="flex max-w-full py-10 items-center justify-center">
-            <nav aria-label="Page navigation">
-                <ul className="flex -space-x-px text-sm">
-                <li>
-                    <a href="#" className="flex items-center justify-center text-body box-border border-default-medium border border-[#E5E7EB] hover:bg-[#EFF6FF] px-3 py-1 rounded-tl-lg rounded-bl-lg">Previous</a>
-                </li>
-                <li>
-                    <a href="#" className="flex items-center justify-center text-body box-border border-default-medium border border-[#E5E7EB] hover:bg-[#EFF6FF] px-3 py-1 rounded-tr-lg rounded-br-lg">Next</a>
-                </li>
-                </ul>
-            </nav>
-            </div>
-        </div>
-    </div>
     );
 }
 
