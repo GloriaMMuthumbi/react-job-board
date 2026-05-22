@@ -42,7 +42,7 @@ function Home() {
     const currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob);
 
     return (
-        <div className="bg-gray-50">
+        <div className="bg-gray-50 min-h-screen">
             <Navbar />
             <div className="max-w-7xl mx-auto mt-4 px-6 lg:px-8 h-18 min-h-18" >
                 <h1 className="font-semibold text-4xl">Find Your Next Opportunity</h1>
@@ -76,7 +76,7 @@ function Home() {
                         />
                     ))}
                     </div>
-                    <div className="flex pt-10 items-center justify-center">
+                    <div className="flex py-10 items-center justify-center">
                         <nav aria-label="Page navigation">
                             <ul className="flex -space-x-px">
                                 <li>
