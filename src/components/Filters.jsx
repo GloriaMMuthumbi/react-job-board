@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FaChevronDown } from "react-icons/fa";
 
-function FilterDropdown({ label, options }) {
+function FilterDropdown({ label, options, onCallFilter }) {
     const [isOpen, setIsOpen] = useState(false);
     const [selected, setSelected] = useState(null);
 
@@ -38,6 +38,7 @@ function FilterDropdown({ label, options }) {
                         onClick={() => {
                             setSelected(option.label);
                             setIsOpen(false);
+                            onCallFilter(option.value)
                         }}
                         className="block w-full px-4 py-2 text-left text-[15px] text-[#1E1E1E] hover:bg-gray-100 transition-colors"
                         >

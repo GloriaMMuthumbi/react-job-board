@@ -36,17 +36,34 @@ function Home() {
     const indexOfLastJob = currentPage * jobsPerPage;
     const indexOfFirstJob = indexOfLastJob - jobsPerPage;
 
+    //filters
+    const [filters, setFilters] = useState({
+        jobType: ""
+    });
+
     //search
     const [searchQuery, setSearchQuery] = useState("");
 
-    const filteredJobs = jobs.filter((job) => 
-        job.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        job.company_name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    const filteredJobs = jobs.filter((job) => {
+        const matchesSearch = 
+            job.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            job.company_name.toLowerCase().includes(searchQuery.toLowerCase());
+
+        const matchesFilter = 
+            filters.jobType === "" ||
+            job.job_type === filters.jobType;
+
+        return matchesSearch && matchesFilter;
+    });
 
     const currentJobs = filteredJobs.slice(indexOfFirstJob, indexOfLastJob);
     const pages = Math.ceil(filteredJobs.length / jobsPerPage);
     const pageNumbers = [...Array(pages).keys()].map((n) => n + 1);
+
+    const handleSearch = (value) => {
+        setSearchQuery(value);
+        setCurrentPage(1);
+    }
 
     const clearSearch = () => {
         setSearchQuery("");
@@ -60,11 +77,17 @@ function Home() {
                 <h1 className="font-semibold text-4xl">Find Your Next Opportunity</h1>
                 <p className="text-lg text-[#6B7280]">Search thousands of remote jobs from around the world.</p>
                 <div className="mt-5">
-                    <SearchBar onSearch={setSearchQuery} onClear={clearSearch} />
+                    <SearchBar onSearch={handleSearch} onClear={clearSearch} />
                     <div className="inline-flex gap-4">
                     <FilterDropdown
                         label="Job Type"
                         options={jobTypeOptions}
+                        onCallFilter={(value) => {
+                            setFilters((prev) => ({
+                                ...prev,
+                                jobType: value
+                            }))
+                        }}
                     />
                         {/* <FilterDropdown
                             label="Location"
