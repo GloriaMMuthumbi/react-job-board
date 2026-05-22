@@ -21,13 +21,12 @@ function SearchBar({ onSearch, onClear}) {
                     }}
                     className="w-full bg-transparent border-none outline-none text-[#111827] placeholder:text-[#6B7280] text-[15px]"
                 />
-                <button onClick={() => {
+                {query !== "" && <button onClick={() => {
                     setQuery("");
                     onClear();
-                }
-                }>
+                }}>
                     <MdCancel size={18}/>
-                </button>
+                </button>}
             </div>
             <button
                 onClick={() => onSearch(query)}
