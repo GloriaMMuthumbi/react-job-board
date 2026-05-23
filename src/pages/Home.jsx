@@ -4,7 +4,6 @@ import Navbar from "../components/Navbar";
 import SearchBar from "../components/SearchBar";
 import JobCard from "../components/JobCard";
 import FilterDropdown from "../components/Filters";
-import SecondaryBtn from "../components/SecondaryBtn";
 
 function Home() {
     const [jobs, setJobs] = useState([]);
