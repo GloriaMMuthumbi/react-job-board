@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { FaChevronDown } from "react-icons/fa";
 
-function FilterDropdown({ label, options, onCallFilter }) {
+function FilterDropdown({ label, options, onCallFilter, selectedValue }) {
     const [isOpen, setIsOpen] = useState(false);
-    const [selected, setSelected] = useState(null);
 
     return (
         <div className="relative inline-block text-left">
@@ -14,7 +13,10 @@ function FilterDropdown({ label, options, onCallFilter }) {
                         isOpen ? "border-[#2563EB]" : "border-[#1E1E1E]"}
                 `}
             >
-                <span>{selected || label}</span>
+                <span>{selectedValue ? options.find(
+                    (option) => option.value === selectedValue
+                )?.label
+                : label}</span>
 
                 <FaChevronDown
                 className={`ml-2 h-3 w-3 transition-transform duration-200 ${
@@ -36,7 +38,6 @@ function FilterDropdown({ label, options, onCallFilter }) {
                         <button
                         key={option.value}
                         onClick={() => {
-                            setSelected(option.label);
                             setIsOpen(false);
                             onCallFilter(option.value)
                         }}

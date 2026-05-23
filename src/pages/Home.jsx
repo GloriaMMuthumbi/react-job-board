@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar";
 import SearchBar from "../components/SearchBar";
 import JobCard from "../components/JobCard";
 import FilterDropdown from "../components/Filters";
+import SecondaryBtn from "../components/SecondaryBtn";
 
 function Home() {
     const [jobs, setJobs] = useState([]);
@@ -79,20 +80,29 @@ function Home() {
                 <div className="mt-5">
                     <SearchBar onSearch={handleSearch} onClear={clearSearch} />
                     <div className="inline-flex gap-4">
-                    <FilterDropdown
-                        label="Job Type"
-                        options={jobTypeOptions}
-                        onCallFilter={(value) => {
-                            setFilters((prev) => ({
-                                ...prev,
-                                jobType: value
-                            }))
-                        }}
-                    />
-                        {/* <FilterDropdown
-                            label="Location"
-                            options={["Remote", "Onsite", "Hybrid"]}
-                        /> */}
+                        <FilterDropdown
+                            label="Job Type"
+                            options={jobTypeOptions}
+                            onCallFilter={(value) => {
+                                setFilters((prev) => ({
+                                    ...prev,
+                                    jobType: value
+                                }));
+                                setCurrentPage(1);
+                            }}
+                            selectedValue={filters.jobType}
+                        />
+                        {filters.jobType &&  <button
+                            onClick={() => {
+                                setFilters({
+                                    jobType: ""
+                                });
+                                setCurrentPage(1);
+                            }}
+                            className="items-center rounded-lg px-2 inline-flex text-[#2563EB] font-medium text-sm hover:bg-[#EFF6FF] cursor-pointer"
+                        >
+                            Reset Filter
+                        </button>}
                     </div>
                 </div>
                 <div className="mt-8">
